@@ -9,6 +9,11 @@ clearButton.classList.add("clear-btn");
 clearButton.textContent = "Clear";
 container.appendChild(clearButton);
 
+const eraseButton = document.createElement("button");
+eraseButton.classList.add("erase-btn");
+eraseButton.textContent = "Eraser";
+container.appendChild(eraseButton);
+
 const rgbButton = document.createElement("button");
 rgbButton.classList.add("rgb-btn");
 container.appendChild(rgbButton);
@@ -29,7 +34,7 @@ slider.insertAdjacentElement("afterend", screenVal);
 screenVal.textContent = slider.value;
 screenVal.style.color = "white";
 
-// Inside the container, create a grid of individual cells 16x16 using nested `<div>` elements.
+// create grid function and attaching draw listener function to i
 function createGrid() {
 	const gridSize = slider.value;
 	grid.style.gridTemplateColumns = `repeat(${gridSize}, 1fr)`;
@@ -42,10 +47,13 @@ function createGrid() {
 		cell.addEventListener("mouseover", draw);
 	}
 }
-
 createGrid();
 
+//drawing function, creating a randomized color for each RGB color.
 function draw(e) {
+
+	if(e.buttons !==1)return; //checking if the button is being pressed.
+
 	if (rgbButton.classList.contains("active")) {
 		const r = Math.floor(Math.random() * 256);
 		const g = Math.floor(Math.random() * 256);
@@ -55,6 +63,7 @@ function draw(e) {
 		e.target.style.backgroundColor = "black";
 	}
 }
+
 
 function clearGrid() {
 	grid.innerHTML = "";
