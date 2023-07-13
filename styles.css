@@ -54,9 +54,11 @@ body {
 	grid-template-rows: repeat(16, 1fr);
 	background-color: hsl(0, 0%, 84%);
 	border: 1px solid hsl(0, 0%, 0%);
-	width: 300px;
-	height: 300px;
+	width: 800px;
+	height: 800px;
 }
 .cell {
 	border: 1px solid black;
+  
+
 }
