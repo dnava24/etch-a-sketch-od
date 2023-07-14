@@ -59,6 +59,11 @@ body {
 }
 .cell {
 	border: 1px dotted rgba(0, 0, 0, 0.296);
+	cursor: crosshair;
   
-
 }
+.grid::after {
+	cursor: crosshair;
+}
+.grid:
+

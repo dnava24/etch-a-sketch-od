@@ -16,8 +16,13 @@ container.appendChild(eraseButton);
 
 const rgbButton = document.createElement("button");
 rgbButton.classList.add("rgb-btn");
-container.appendChild(rgbButton);
 rgbButton.textContent = "RGB";
+container.appendChild(rgbButton);
+
+const blackButton = document.createElement("button");
+blackButton.classList.add("black-btn");
+blackButton.textContent = "Black";
+container.appendChild(blackButton);
 
 const slider = document.createElement("input");
 slider.classList.add("slider");
@@ -34,7 +39,7 @@ slider.insertAdjacentElement("afterend", screenVal);
 screenVal.textContent = slider.value;
 screenVal.style.color = "white";
 
-// create grid function and attaching draw listener function to i
+// create grid function and attaching draw listener function to each cell
 function createGrid() {
 	const gridSize = slider.value;
 	grid.style.gridTemplateColumns = `repeat(${gridSize}, 1fr)`;
@@ -49,34 +54,51 @@ function createGrid() {
 }
 createGrid();
 
-//drawing function, creating a randomized color for each RGB color.
+// drawing function
 function draw(e) {
-
-	if(e.buttons !==1)return; //checking if the button is being pressed.
+	if (e.buttons !== 1) return; // Checking if the left mouse button is being pressed.
 
 	if (rgbButton.classList.contains("active")) {
 		const r = Math.floor(Math.random() * 256);
 		const g = Math.floor(Math.random() * 256);
 		const b = Math.floor(Math.random() * 256);
 		e.target.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
-	} else {
+	} else if (blackButton.classList.contains("active")) {
 		e.target.style.backgroundColor = "black";
+	} else if (eraseButton.classList.contains("active")) {
+		e.target.style.backgroundColor = "transparent";
 	}
 }
-
 
 function clearGrid() {
 	grid.innerHTML = "";
 	createGrid();
 }
 
+function toggleEraseMode() {
+	eraseButton.classList.toggle("active");
+	blackButton.classList.remove("active"); // Ensure that only one drawing mode is active at a time
+	rgbButton.classList.remove("active");
+
+}
+
 function toggleRGB() {
 	rgbButton.classList.toggle("active");
+	blackButton.classList.remove("active"); // Ensure that only one drawing mode is active at a time
+	eraseButton.classList.remove("active");
+}
+
+function toggleBlack() {
+	blackButton.classList.toggle("active");
+	rgbButton.classList.remove("active"); // Ensure that only one drawing mode is active at a time
+	eraseButton.classList.remove("active");
 }
 
 // Event listeners
 clearButton.addEventListener("click", clearGrid);
 rgbButton.addEventListener("click", toggleRGB);
+blackButton.addEventListener("click", toggleBlack);
+eraseButton.addEventListener("click", toggleEraseMode);
 slider.addEventListener("input", function () {
 	screenVal.textContent = slider.value;
 	clearGrid();
