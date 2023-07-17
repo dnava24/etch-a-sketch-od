@@ -17,12 +17,24 @@ container.appendChild(eraseButton);
 const rgbButton = document.createElement("button");
 rgbButton.classList.add("rgb-btn");
 rgbButton.textContent = "RGB";
-container.appendChild(rgbButton);
+container.appendChild(rgbButton); 
 
 const blackButton = document.createElement("button");
 blackButton.classList.add("black-btn");
 blackButton.textContent = "Black";
 container.appendChild(blackButton);
+
+const colorSelector = document.createElement ("input");
+colorSelector.classList.add("color-selector");
+container.appendChild(colorSelector);
+colorSelector.type = "color";
+colorSelector.textContent = "Color Selector";
+
+const colorSelectorLabel = document.createElement("label");
+colorSelectorLabel.classList.add("color-selector-label");
+colorSelectorLabel.textContent = "Color Selector";
+colorSelector.insertAdjacentElement("afterend", colorSelectorLabel);
+colorSelectorLabel.style.color = "white";	
 
 const slider = document.createElement("input");
 slider.classList.add("slider");
@@ -50,7 +62,16 @@ function createGrid() {
 		cell.classList.add("cell");
 		grid.appendChild(cell);
 		cell.addEventListener("mouseover", draw);
+		
 	}
+	 grid.addEventListener("mousedown", (e) => {
+			e.preventDefault();
+			grid.classList.add("crosshair");
+		});
+
+		grid.addEventListener("mouseup", () => {
+			grid.classList.remove("crosshair");
+		});
 }
 createGrid();
 
@@ -68,6 +89,9 @@ function draw(e) {
 	} else if (eraseButton.classList.contains("active")) {
 		e.target.style.backgroundColor = "transparent";
 	}
+	else if (colorSelector.classList.contains("active")) {
+        e.target.style.backgroundColor = colorSelector.value;
+    }
 }
 
 function clearGrid() {
@@ -94,12 +118,23 @@ function toggleBlack() {
 	eraseButton.classList.remove("active");
 }
 
+function togglecolorSelector() {
+	colorSelector.classList.toggle("active");
+	blackButton.classList.remove("active"); 
+	eraseButton.classList.remove("active");
+	clearButton.classList.remove("active");
+	rgbButton.classList.remove("active");
+
+}
+
 // Event listeners
 clearButton.addEventListener("click", clearGrid);
 rgbButton.addEventListener("click", toggleRGB);
 blackButton.addEventListener("click", toggleBlack);
 eraseButton.addEventListener("click", toggleEraseMode);
+colorSelector.addEventListener("click", togglecolorSelector);
 slider.addEventListener("input", function () {
 	screenVal.textContent = slider.value;
 	clearGrid();
 });
+
