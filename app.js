@@ -1,8 +1,5 @@
 const container = document.querySelector("#container");
 
-const grid = document.createElement("div");
-grid.classList.add("grid");
-container.appendChild(grid);
 
 const clearButton = document.createElement("button");
 clearButton.classList.add("clear-btn");
@@ -28,13 +25,31 @@ const colorSelector = document.createElement ("input");
 colorSelector.classList.add("color-selector");
 container.appendChild(colorSelector);
 colorSelector.type = "color";
-colorSelector.textContent = "Color Selector";
+
+
 
 const colorSelectorLabel = document.createElement("label");
 colorSelectorLabel.classList.add("color-selector-label");
 colorSelectorLabel.textContent = "Color Selector";
 colorSelector.insertAdjacentElement("afterend", colorSelectorLabel);
-colorSelectorLabel.style.color = "white";	
+
+const buttonWrapper = document.createElement("div");
+buttonWrapper.classList.add("button-wrapper");
+container.appendChild(buttonWrapper);
+buttonWrapper.appendChild(clearButton);
+buttonWrapper.appendChild(eraseButton);
+buttonWrapper.appendChild(rgbButton);
+buttonWrapper.appendChild(blackButton);
+buttonWrapper.appendChild(colorSelector);
+buttonWrapper.appendChild(colorSelectorLabel);
+// buttonWrapper.appendChild(slider);
+// buttonWrapper.appendChild(screenVal);
+
+
+const grid = document.createElement("div");
+grid.classList.add("grid");
+container.appendChild(grid);
+
 
 const slider = document.createElement("input");
 slider.classList.add("slider");
@@ -42,14 +57,21 @@ container.appendChild(slider);
 slider.type = "range";
 slider.value = 16;
 slider.min = 1;
-slider.max = 100;
+slider.max = 64;
 slider.step = 1;
+
 
 const screenVal = document.createElement("output");
 screenVal.classList.add("value");
 slider.insertAdjacentElement("afterend", screenVal);
 screenVal.textContent = slider.value;
-screenVal.style.color = "white";
+
+const gridWrapper = document.createElement("div");
+gridWrapper.classList.add("grid-wrapper");
+container.appendChild(gridWrapper);
+gridWrapper.appendChild(grid);
+gridWrapper.appendChild(slider);
+gridWrapper.appendChild(screenVal);
 
 // create grid function and attaching draw listener function to each cell
 function createGrid() {
@@ -137,4 +159,3 @@ slider.addEventListener("input", function () {
 	screenVal.textContent = slider.value;
 	clearGrid();
 });
-
